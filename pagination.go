@@ -6,6 +6,11 @@ import (
 	"strings"
 )
 
+type PaginationElem struct {
+	Page uint
+	Size uint
+}
+
 func parsePagination(input string) (PaginationElem, error) {
 	sentence := strings.TrimSpace(input)
 	if len(sentence) <= 0 {

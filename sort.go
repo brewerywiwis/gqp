@@ -5,6 +5,11 @@ import (
 	"strings"
 )
 
+type SortElem struct {
+	Key  string
+	Desc bool
+}
+
 func parseSort(input string) ([]SortElem, error) {
 	sentence := strings.TrimSpace(input)
 	if len(sentence) <= 0 {

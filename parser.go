@@ -1,32 +1,5 @@
 package gqp
 
-type QueryInput struct {
-	Filter     string
-	Sort       string
-	Pagination string
-}
-
-type FilterElem struct {
-	Op    string
-	Value any
-}
-
-type SortElem struct {
-	Key  string
-	Desc bool
-}
-
-type PaginationElem struct {
-	Page uint
-	Size uint
-}
-
-type QueryOutput struct {
-	Filter     map[string][]FilterElem
-	Sort       []SortElem
-	Pagination PaginationElem
-}
-
 type QueryParser struct {
 }
 

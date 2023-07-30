@@ -7,6 +7,11 @@ import (
 	"strings"
 )
 
+type FilterElem struct {
+	Op    string
+	Value any
+}
+
 func parseFilterElem(fe any) ([]FilterElem, error) {
 	result := make([]FilterElem, 0)
 	switch c := fe.(type) {
