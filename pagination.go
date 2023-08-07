@@ -11,6 +11,10 @@ type PaginationElem struct {
 	Size uint
 }
 
+func (p *PaginationElem) ToSQL() string {
+	return fmt.Sprintf("limit %v offset %v", p.Size, p.Page*p.Size)
+}
+
 func parsePagination(input string) (PaginationElem, error) {
 	sentence := strings.TrimSpace(input)
 	if len(sentence) <= 0 {
@@ -29,6 +33,7 @@ func parsePagination(input string) (PaginationElem, error) {
 	if err != nil {
 		return PaginationElem{}, err
 	}
+
 	s, err := strconv.Atoi(tokens[1])
 	if err != nil {
 		return PaginationElem{}, err
