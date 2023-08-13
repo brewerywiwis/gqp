@@ -8,10 +8,10 @@ import (
 )
 
 type PaginationElem struct {
-	Page   uint64
-	Size   uint64
-	Actual uint64
-	Total  uint64
+	Page   uint64 `json:"page"`
+	Size   uint64 `json:"size"`
+	Actual uint64 `json:"actual"`
+	Total  uint64 `json:"total"`
 }
 
 func NewPaginationElem(page uint64, size uint64, total uint64) *PaginationElem {
