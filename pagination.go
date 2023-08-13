@@ -2,13 +2,45 @@ package gqp
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 )
 
 type PaginationElem struct {
-	Page uint
-	Size uint
+	Page   uint64
+	Size   uint64
+	Actual uint64
+	Total  uint64
+}
+
+func NewPaginationElem(page uint64, size uint64, total uint64) *PaginationElem {
+	if size <= 0 {
+		return &PaginationElem{Page: 0, Size: 0, Actual: 0, Total: total}
+	}
+
+	p := PaginationElem{
+		Page: page,
+		Size: size,
+	}
+	p = p.AdjustWithTotalData(total)
+
+	return &p
+}
+func (p PaginationElem) AdjustWithTotalData(total uint64) PaginationElem {
+	actualPage := p.Page
+	actualSize := p.Size
+	if (actualPage+1)*actualSize > total {
+		actualPage = uint64(math.Ceil(float64(total)/float64(actualSize))) - 1
+		actualSize = total - (actualPage * actualSize)
+	}
+
+	return PaginationElem{
+		Page:   actualPage,
+		Size:   p.Size,
+		Actual: actualSize,
+		Total:  total,
+	}
 }
 
 func (p *PaginationElem) ToSQL() string {
@@ -44,7 +76,7 @@ func parsePagination(input string) (PaginationElem, error) {
 	}
 
 	return PaginationElem{
-		Page: uint(p),
-		Size: uint(s),
+		Page: uint64(p),
+		Size: uint64(s),
 	}, nil
 }
